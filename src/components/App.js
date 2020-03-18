@@ -1,6 +1,5 @@
 import React from "react"
 import SearchBar from "./SearchBar"
-import SearchResult from "./SearchResults"
 
 
 import { useLocalStore } from "mobx-react";
@@ -12,10 +11,11 @@ const StoreProvider = ({ children }) => {
     const store = useLocalStore(() => ({
         searchText: "",
         mapState: {
-            lng: 72.562744140625,
-            lat: 23.037763595581055,
-            zoom: 18
-        }
+            lng: 73.18130097069718,
+            lat: 22.326737087756456,
+            zoom: 12
+        },
+        suggestions:false
     }))
     return (
         <StoreContext.Provider 
@@ -28,9 +28,8 @@ const StoreProvider = ({ children }) => {
 const App = () => {
     return (
         <StoreProvider>
-            <div className="container">
+            <div className="container mainWrapper">
                 <SearchBar />
-                <SearchResult/>
                 <MapBody/>
             </div>
         </StoreProvider>

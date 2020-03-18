@@ -13,7 +13,9 @@ const SearchResult = ()=>{
         const fetchData = async()=> {
             const SearchResult = await api.get("",{
                 params: {
-                    query: store.searchText
+                    near: "vadodara",
+                    limit:5,
+                    query: store.searchText,
                 }
             })
             setSearchResult(SearchResult.data.response.venues)
@@ -24,6 +26,7 @@ const SearchResult = ()=>{
     const setMapCoords = (lat,lng) =>{
         store.mapState.lat = lat;
         store.mapState.lng= lng;
+        store.suggestions = false
     }
     
     const resultArray = searchResult;

@@ -1,5 +1,8 @@
 import React, { useContext,useState } from "react"
 import { StoreContext } from "./App";
+import SearchResult from "./SearchResults"
+import { useObserver } from "mobx-react";
+import "./site.css"
 
 const SearchBar = () => {
 
@@ -9,6 +12,11 @@ const SearchBar = () => {
     const getResults = (e)=>{
         setSearchText(e.target.value)
     }
+
+    const showSuggestions = ()=>{
+        store.suggestions = true
+    }
+
     return (
         <div>
             <form onSubmit={(e)=>{
@@ -16,15 +24,18 @@ const SearchBar = () => {
                 store.searchText = searchText;
             }}>
                 <div className="form-group mt-5">
-                    <label>Serach for place</label>
                     <input 
                         type="text"
-                        className="form-control" 
-                        onChange={getResults}>
+                        className="searchBar form-control" 
+                        placeholder="Search here"
+                        onChange={getResults}
+                        onFocus={showSuggestions}
+                    >
                     </input>
                 </div>
                     
             </form>
+            {useObserver(()=>(store.suggestions)&&<SearchResult/>)}
         </div>
     )
 }
