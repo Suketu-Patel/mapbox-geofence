@@ -23,7 +23,7 @@ const SearchBar = () => {
                 e.preventDefault();
                 store.searchText = searchText;
             }}>
-                <div className="form-group mt-5">
+                <div className="form-group mt-3">
                     <input 
                         type="text"
                         className="searchBar form-control" 
