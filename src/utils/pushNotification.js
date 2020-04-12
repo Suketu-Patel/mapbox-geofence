@@ -22,7 +22,8 @@ const displayNotification = () => {
         navigator.serviceWorker.getRegistration().then((reg) => {
             reg.showNotification('You have a task here',{
                 "vibrate": [300,100,400],
-                "icon":"https://img.icons8.com/bubbles/344/appointment-reminders.png"
+                "icon":"https://img.icons8.com/bubbles/344/appointment-reminders.png",
+                "badge":"https://img.icons8.com/officexs/344/appointment-reminders.png"
             });
         });
     }

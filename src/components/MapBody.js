@@ -44,6 +44,31 @@ const MapBody = () => {
         .setLngLat([store.mapState.lng+0.005, store.mapState.lat+0.005])
         .addTo(map);
         
+        const redraw = ()=>{
+            map.getSource("source_circle_500").setData({
+                "type": "FeatureCollection",
+                "features": [{
+                  "type": "Feature",
+                  "geometry": {
+                    "type": "Point",
+                    "coordinates": [store.mapState.lng, store.mapState.lat]
+                  }
+                }]
+              })
+        }
+
+        const setGeofence = ()=>{
+            store.geoFence = (
+            geofence(
+                store.mapState.lat,
+                store.mapState.lat2,
+                store.mapState.lng,
+                store.mapState.lng2
+            )<store.radius/1000)
+            console.log(store.geoFence)
+            console.log(store.radius/1000)
+        }
+
         map.on('load', function() {
             map.addSource("source_circle_500", {
                 "type": "geojson",
@@ -109,22 +134,15 @@ const MapBody = () => {
                 }
             );
             marker.setLngLat([store.mapState.lng, store.mapState.lat])
-        
+            redraw();
+            setGeofence();
+            
         })
         marker.on('dragend',()=>{
             let lnglat = marker.getLngLat();
             store.mapState.lat = lnglat.lat;
             store.mapState.lng = lnglat.lng;
-            map.getSource("source_circle_500").setData({
-                "type": "FeatureCollection",
-                "features": [{
-                  "type": "Feature",
-                  "geometry": {
-                    "type": "Point",
-                    "coordinates": [store.mapState.lng, store.mapState.lat]
-                  }
-                }]
-              })
+            setGeofence();
         })
         marker2.on('dragend',()=>{
             let lnglat = marker2.getLngLat();
